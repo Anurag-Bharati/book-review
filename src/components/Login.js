@@ -1,31 +1,32 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
-import { Button, Form, FormGroup, Input, Label } from "reactstrap"
-import userService from "../services/userService"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button, Form, FormGroup, Input, Label } from "reactstrap";
+import userService from "../services/userService";
 
 function Login() {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const navigate = useNavigate()
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
     const handleLogin = (e) => {
-        e.preventDefault()
-        console.log(username, password)
-        userService.login({ username, password })
-            .then(res => {
-                window.localStorage.setItem('token', res.data.token)
-                window.alert(res.data.status)
-                navigate('/')
-            }).catch(err => window.alert(err.response.data.msg))
-    }
+        e.preventDefault();
+        console.log(username, password);
+        userService
+            .login({ username, password })
+            .then((res) => {
+                console.log(res.data);
+                window.localStorage.setItem("token", res.data.token);
+                window.alert(res.data.status);
+                navigate("/");
+            })
+            .catch((err) => window.alert(err.res.data.msg));
+    };
     return (
         <div>
             <h2>Login Form</h2>
             <Form onSubmit={handleLogin}>
                 <FormGroup>
-                    <Label for="username">
-                        Username
-                    </Label>
+                    <Label for="username">Username</Label>
                     <Input
                         id="username"
                         name="username"
@@ -36,9 +37,7 @@ function Login() {
                     />
                 </FormGroup>
                 <FormGroup>
-                    <Label for="password">
-                        Password
-                    </Label>
+                    <Label for="password">Password</Label>
                     <Input
                         id="password"
                         name="password"
@@ -49,13 +48,10 @@ function Login() {
                     />
                 </FormGroup>
 
-                <Button color="primary">
-                    Login
-                </Button>
-
+                <Button color="primary">Login</Button>
             </Form>
         </div>
-    )
+    );
 }
 
-export default Login
+export default Login;
